@@ -1,0 +1,128 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCxvNxJJgtD9kkphS3bACxj"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "1845"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "GoldUser1845"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "9",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "32.438997\u2591",
+                        "decimalLongitude": "34.877548\u2591",
+                        "locationId": "9"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R5QCvjvG51p8PJFre5dv73"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "has_Obs_ID": "9"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location9"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValueRhopilema nomadica9"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue9",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "????? ?????? ???? ????, ????? ?????",
+                        "translated_text": "Masses of jellyfish at Hadera Port, mostly small",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location9"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValueRhopilema nomadica9"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7SRsU2VtqcNuMAGVBB5xtm"
+            },
+            "referent": "Rhopilema nomadica",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "9",
+                "1845"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "9Rhopilema nomadica",
+                "9"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "9Rhopilema nomadica",
+                "Rhopilema nomadica"
+            ]
+        }
+    ]
+}

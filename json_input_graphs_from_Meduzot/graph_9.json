@@ -1,0 +1,128 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R9wp7xr4eRABCKO3mJZMDl"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "1826"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "User1826"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "4",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "32,849519",
+                        "decimalLongitude": "34,94339",
+                        "locationId": "2"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R5QCvjvG51p8PJFre5dv73"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "has_Obs_ID": "4"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location2"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValueRhopilema nomadica4"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue4",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "???? ?????? ??????? 0 ?? 12 ?????, ????? ???? ?????. ?? ???? ???? ????",
+                        "translated_text": "Watch the dive at depths 0 to 12 meters, especially in the shallow part.Not observed deeper",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location2"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValueRhopilema nomadica4"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7SRsU2VtqcNuMAGVBB5xtm"
+            },
+            "referent": "Rhopilema nomadica",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "4",
+                "1826"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "4Rhopilema nomadica",
+                "4"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "4Rhopilema nomadica",
+                "Rhopilema nomadica"
+            ]
+        }
+    ]
+}

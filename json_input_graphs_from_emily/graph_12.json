@@ -1,0 +1,100 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7nXuuGHLWowNFMhnryOkYm"
+            },
+            "marker": {
+                "type": "StringMarker",
+                "properties": {
+                    "dataProperties": {
+                        "str": "10"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "User10"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R8J0VkChlddLbiY49WuuP5l"
+            },
+            "referent": "App_Report15615"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RKbvi7ZxPgQQ8xUiNpJIO1"
+            },
+            "referent": "event_export_20lines_emily_s_format_csv_12",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "date": "07/07/2023",
+                        "time": "12:00:00",
+                        "distance_from_coast": "0-200",
+                        "quantity": "1",
+                        "quantity_rank": "",
+                        "size_rank": "31-60",
+                        "aphia_id": "",
+                        "jellies_on_beach": "0",
+                        "life_cycle": "N/A",
+                        "source": "event_export_20lines_emily_s_format_csv_12"
+                    },
+                    "objectProperties": {
+                        "location": {
+                            "type_label": "Location",
+                            "value": "?? ???? ???? - ??????, ???????, ??????, ?'???? ????"
+                        },
+                        "species": {
+                            "type_label": "Species",
+                            "value": "????? ?????"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDF3VSsSL5IaHTn7wvmJ5en"
+            },
+            "referent": "meduzot_app",
+            "marker": {
+                "type": "StringMarker",
+                "properties": {
+                    "str": "Meduzot App"
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "has_for_object"
+            },
+            "arguments": [
+                "App_Report15615",
+                "event_export_20lines_emily_s_format_csv_12"
+            ]
+        },
+        {
+            "type": {
+                "label": "reported_by"
+            },
+            "arguments": [
+                "App_Report15615",
+                "User10"
+            ]
+        },
+        {
+            "type": {
+                "label": "has_reported_through"
+            },
+            "arguments": [
+                "App_Report15615",
+                "meduzot_app",
+                "User10"
+            ]
+        }
+    ]
+}

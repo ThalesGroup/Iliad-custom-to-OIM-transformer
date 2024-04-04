@@ -1,0 +1,109 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCxvNxJJgtD9kkphS3bACxj"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "402"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "GoldUser402"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "Location7",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "32,849519",
+                        "decimalLongitude": "34,94339",
+                        "locationId": "7"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValueRhizostoma pulmo7"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue7",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "??? ???? ??????? ???????",
+                        "translated_text": "Between the bay of noods and buildings",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location7"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValueRhizostoma pulmo7"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R8v6q09cLvVIUJKaE7qrplx"
+            },
+            "referent": "Rhizostoma pulmo",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "7",
+                "402"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "7Rhizostoma pulmo",
+                "7"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "7Rhizostoma pulmo",
+                "Rhizostoma pulmo"
+            ]
+        }
+    ]
+}

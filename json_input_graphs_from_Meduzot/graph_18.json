@@ -1,0 +1,128 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCxvNxJJgtD9kkphS3bACxj"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "2039"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "GoldUser2039"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "10",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "32.492007\u2591",
+                        "decimalLongitude": "34.888730\u2591",
+                        "locationId": "9"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R5QCvjvG51p8PJFre5dv73"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "has_Obs_ID": "10"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location9"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValueRhopilema nomadica10"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue10",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "???? ????? ??? ???? ??, ????? ???? ????? ????? ????? ????? ?? 10-20 ?\\\"?, ??? ???????? ???? ??????? ????, ???? ?????? 30-40 ?\\\"?. ???? ?????? ???? ???? ???? ????? ?????.",
+                        "translated_text": "A reside involved in front of seafood, near the beach mainly a 10-20 cm jellyfish, as the amount of threads is moved, the size of 30-40 cm.The amount of jellyfish has diminished in relation to the previous weekend.",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location9"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValueRhopilema nomadica10"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7SRsU2VtqcNuMAGVBB5xtm"
+            },
+            "referent": "Rhopilema nomadica",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "10",
+                "2039"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "10Rhopilema nomadica",
+                "10"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "10Rhopilema nomadica",
+                "Rhopilema nomadica"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCxvNxJJgtD9kkphS3bACxj"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "361"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "GoldUser361"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "Location10",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "32,355448",
+                        "decimalLongitude": "34,790955",
+                        "locationId": "10"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValuePhyllorhiza punctata3"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue3",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "????????? ????? ?? ????? ?????? ??????? ???????, ???? ??????? ???? ?? ????????? ????? ?????? ????? ????????",
+                        "translated_text": "Pyloresis based its status as a third jelly in its distribution, with many reports of brown pylores in recent days",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location10"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValuePhyllorhiza punctata3"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7X9uOh29t7NC0BAA4ALsdB"
+            },
+            "referent": "Phyllorhiza punctata",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "3",
+                "361"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "3Phyllorhiza punctata",
+                "3"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "3Phyllorhiza punctata",
+                "Phyllorhiza punctata"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,109 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCxvNxJJgtD9kkphS3bACxj"
+            },
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "IndID": "527"
+                    },
+                    "objectProperties": {}
+                }
+            },
+            "referent": "GoldUser527"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RCQlPYJBbRm4AXOd4O2NjG8"
+            },
+            "referent": "Location18",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "decimalLatitude": "31.806910\u2591",
+                        "decimalLongitude": "34.634776\u2591",
+                        "locationId": "18"
+                    },
+                    "objectProperties": {}
+                }
+            }
+        },
+        {
+            "type": {},
+            "referent": "MeasurementValuePhyllorhiza punctata1"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDRKM36qKDuN1Axyn3GeP2T"
+            },
+            "referent": "MeasurementValue1",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {
+                        "original_text": "???? ?????",
+                        "translated_text": "At Ashdod Port",
+                        "original_language": "he",
+                        "translated_language": "en"
+                    },
+                    "objectProperties": {
+                        "has_Location": {
+                            "type_label": "Location",
+                            "value": "Location18"
+                        },
+                        "has_measurementValue": {
+                            "type_label": "MeasurementValue",
+                            "value": "MeasurementValuePhyllorhiza punctata1"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R7X9uOh29t7NC0BAA4ALsdB"
+            },
+            "referent": "Phyllorhiza punctata",
+            "marker": {
+                "type": "OwlEntityMarker",
+                "properties": {
+                    "dataProperties": {},
+                    "objectProperties": {}
+                }
+            }
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "recorded_by"
+            },
+            "arguments": [
+                "1",
+                "527"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_during"
+            },
+            "arguments": [
+                "1Phyllorhiza punctata",
+                "1"
+            ]
+        },
+        {
+            "type": {
+                "label": "observed_species"
+            },
+            "arguments": [
+                "1Phyllorhiza punctata",
+                "Phyllorhiza punctata"
+            ]
+        }
+    ]
+}
