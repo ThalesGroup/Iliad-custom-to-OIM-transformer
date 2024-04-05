@@ -166,8 +166,10 @@ def get_observations_new_format(meduzot_file, occurence_string):
 		if len(quantity_list)>cpt_species:
 			if quantity_list[cpt_species] != "-" and quantity_list[cpt_species] != "0":
 				new_observation["occurenceStatus"] = "present"					# rule to get from Dori
+			else:
+				new_observation["occurenceStatus"] = "absent"
 		else:
-			new_observation["occurenceStatus"] = "absent"
+			new_observation["occurenceStatus"] = "unreported"
 		new_observation["basisOfRecord"] = "HumanObservation"
 		new_observation["scientificNameID"] = str_species
 		new_observation["recordedBy (Ind ID)"] = row["email"]					# to check with Dori
