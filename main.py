@@ -37,7 +37,8 @@ def uploadFiles():
           oim_file = "~/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/my_oim_file.csv"
           df_clean = clean(uploaded_file)
           df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
-          df_OIM = get_observations(clean_file)
+          meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
+          df_OIM = get_observations_new_format(clean_file, meduzot_occurence)
           df_OIM.to_csv(oim_file, encoding = "ISO-8859-1")
           print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
           print('\n********\nlength of OIM observations = ', len(df_OIM), "\n********\n")
