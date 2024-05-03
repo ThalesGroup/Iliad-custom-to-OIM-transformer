@@ -165,7 +165,7 @@ def getLinguisticSize(size, dict_size):
 
 
 
-def get_observations_new_format(meduzot_file, occurence_string):
+def get_observations_new_format(meduzot_file, occurence_string, location_file, species_file, users_file, quantity_file, size_file):
 	"""
 	"""
 	meduzot_df = pd.read_csv(meduzot_file)#, encoding = "ISO-8859-1")
@@ -173,32 +173,32 @@ def get_observations_new_format(meduzot_file, occurence_string):
 	observation_df = pd.DataFrame()
 	
 	#Get the translation dictionaries from the csv files:
-	df_location = pd.read_excel("/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_location_conversion.xlsx")
+	df_location = pd.read_excel(location_file)
 	dict_locations = {}
 	for index, row in df_location.iterrows():
 		dict_locations[row["33 BeachNameHeb"]] = row["20 zone ID"]
 
-	df_species  = pd.read_excel("/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_species_conversion.xlsx")
+	df_species  = pd.read_excel(species_file)
 	dict_species = {}
 	for index, row in df_species.iterrows():
 		dict_species[row["Hebrew"]] = row["Latin"]
 
 	pprint(df_species)
 
-	df_users = pd.read_csv("/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_user_ID.csv",
+	df_users = pd.read_csv(users_file,
 							sep=";", encoding = "ISO-8859-1")
 	list_gold_users = []
 	for index, row in df_users.iterrows():
 		if int(row["Sum of goldUser (accuracy)"])>1:
 			list_gold_users.append(row["userID"])
 
-	df_quantity = pd.read_csv("/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_quantity_conversion.csv",
+	df_quantity = pd.read_csv(quantity_file,
 							sep=";")
 	dict_quantity = {}
 	for index, row in df_quantity.iterrows():
 		dict_quantity[row["Quantity Range"]] = row["Rank"]
 
-	df_size = pd.read_csv("/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_size_conversion.csv",
+	df_size = pd.read_csv(size_file,
 							sep=";")
 	dict_size = {}
 	for index, row in df_size.iterrows():
@@ -356,7 +356,13 @@ if __name__ == "__main__":
 		df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
 		
 		meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
-		df_OIM = get_observations_new_format(clean_file, meduzot_occurence)
+		df_OIM = get_observations_new_format(clean_file, meduzot_occurence,
+			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_location_conversion.xlsx",
+			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_species_conversion.xlsx",
+			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_user_ID.csv",
+			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_quantity_conversion.csv",
+			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_size_conversion.csv"
+			)
 		df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
 		
 		print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")

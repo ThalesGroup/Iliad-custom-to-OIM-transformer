@@ -1,0 +1,57 @@
+{
+    "concepts": [
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R8XkLeoqVm6s7wqomQEtEw3"
+            },
+            "referent": "user"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/R8J0VkChlddLbiY49WuuP5l"
+            },
+            "referent": "observation"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RKbvi7ZxPgQQ8xUiNpJIO1"
+            },
+            "referent": "event"
+        },
+        {
+            "type": {
+                "label": "http://webprotege.stanford.edu/RDF3VSsSL5IaHTn7wvmJ5en"
+            },
+            "referent": "app"
+        }
+    ],
+    "relations": [
+        {
+            "type": {
+                "label": "has_for_object"
+            },
+            "arguments": [
+                "event",
+                "observation"
+            ]
+        },
+        {
+            "type": {
+                "label": "reported_by"
+            },
+            "arguments": [
+                "observation",
+                "user"
+            ]
+        },
+        {
+            "type": {
+                "label": "has_reported_through"
+            },
+            "arguments": [
+                "observation",
+                "app"
+            ]
+        }
+    ]
+}

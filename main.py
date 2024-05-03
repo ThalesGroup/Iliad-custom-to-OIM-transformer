@@ -8,6 +8,13 @@ import flask_excel as excel
 
 from meduzot_preprocessing import *
 
+# Configuraton files for Meduzot data decoding :
+location_file = "parameters/JF_location_conversion.xlsx"
+species_file = "parameters/JF_species_conversion.xlsx"
+users_file = "parameters/JF_user_ID.csv"
+quantity_file = "parameters/JF_quantity_conversion.csv"
+size_file = "parameters/JF_size_conversion.csv"
+
 
 app = Flask(__name__)
 
@@ -37,7 +44,7 @@ def uploadFiles():
           df_clean = clean(uploaded_file)
           df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
           meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
-          df_OIM = get_observations_new_format(clean_file, meduzot_occurence)
+          df_OIM = get_observations_new_format(clean_file, meduzot_occurence, location_file, species_file, users_file, quantity_file, size_file)
 
           # To uncomment if you want to download the file from browser:
 #          out_df = df_OIM.to_csv(None, encoding = "ISO-8859-1")
@@ -74,14 +81,14 @@ def uploadFiles():
 @app.route("/test", methods=['GET', 'POST'])
 def test():
       # get the uploaded file
-      uploaded_file = "export_for Claire_2023_small.csv"
+      uploaded_file = "data/export_for Claire_2023_small.csv"
       if uploaded_file != '':
           clean_file = "temp_file.csv"
           oim_file = "my_oim_file.csv"
           df_clean = clean(uploaded_file)
           df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
           meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
-          df_OIM = get_observations_new_format(clean_file, meduzot_occurence)
+          df_OIM = get_observations_new_format(clean_file, meduzot_occurence, location_file, species_file, users_file, quantity_file, size_file)
 
           df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
           with open(oim_file, "r") as file:

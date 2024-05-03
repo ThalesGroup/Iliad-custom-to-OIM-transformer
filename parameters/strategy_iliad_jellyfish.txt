@@ -1,0 +1,10 @@
+Type de concept|mesure de similarite|precision|seuil|fonction de fusion
+
+**fusion
+org.insyto.utils.SimType
+
+Thing|org.insyto.utils.SimRefEgale|0|1|org.insyto.utils.FusFirstValue
+Entity|org.insyto.utils.SimRefEgale|0|1|org.insyto.utils.FusFirstValue
+http://webprotege.stanford.edu/RKbvi7ZxPgQQ8xUiNpJIO1|org.insyto.utils.JFEventSimilarity|0|1|org.insyto.utils.JFSameEventFusion
+http://webprotege.stanford.edu/R8XkLeoqVm6s7wqomQEtEw3|org.insyto.utils.SimRefEgale|0|1|org.insyto.utils.FusFirstValue
+http://webprotege.stanford.edu/R8J0VkChlddLbiY49WuuP5l|org.insyto.utils.TranslatedTextSimilarity|0|1|org.insyto.utils.TranslatedTextFusion
