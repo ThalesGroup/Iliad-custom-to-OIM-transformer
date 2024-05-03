@@ -53,6 +53,9 @@ def uploadFiles():
                response = excel.make_response_from_array(data, "csv",
                                           file_name="export_data")
 
+               print("data contents :")
+               pprint(data)
+
                print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
                print('\n********\nlength of OIM observations = ', len(df_OIM), "\n******")
 
@@ -70,6 +73,5 @@ def uploadFiles():
 
 
 if (__name__ == "__main__"):
-     app.run(port = 5000)
-if (__name__ == "__main__"):
+     excel.init_excel(app)
      app.run(port = 5000)
