@@ -1,4 +1,4 @@
-from flask import Flask, Response, render_template, request, redirect, url_for, send_file,send_from_directory, make_response, jsonify
+from flask import Flask, render_template, request, redirect, url_for
 import os
 from os.path import join, dirname, realpath
 import  csv
@@ -50,8 +50,8 @@ def uploadFiles():
                for row in csv_data:
                     data.append(row)
 
-               response = excel.make_response_from_array(data, "csv",
-                                          file_name="export_data")
+               response = excel.make_response_from_array(data, "csv")
+#               response = excel.make_response_from_array([[1, 2], [3, 4]], "csv")
 
                print("data contents :")
                pprint(data)
@@ -59,8 +59,8 @@ def uploadFiles():
                print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
                print('\n********\nlength of OIM observations = ', len(df_OIM), "\n******")
 
-               pprint(Response(response))
-               return Response(response)
+               pprint(response)
+               return response
 
           # To uncomment if you want to download the file from browser:
           # try:
@@ -71,7 +71,42 @@ def uploadFiles():
 #      return redirect(url_for('index'))
 
 
+@app.route("/test", methods=['GET', 'POST'])
+def test():
+      # get the uploaded file
+      uploaded_file = "export_for Claire_2023_small.csv"
+      if uploaded_file != '':
+          clean_file = "temp_file.csv"
+          oim_file = "my_oim_file.csv"
+          df_clean = clean(uploaded_file)
+          df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
+          meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
+          df_OIM = get_observations_new_format(clean_file, meduzot_occurence)
+
+          df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
+          with open(oim_file, "r") as file:
+               csv_data = csv.reader(file, delimiter=",")
+          
+               data = []
+               for row in csv_data:
+                    data.append(row)
+
+               response = excel.make_response_from_array(data, "csv")
+#               response = excel.make_response_from_array([[1, 2], [3, 4]], "csv")
+
+               print("data contents :")
+               pprint(data)
+
+               print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
+               print('\n********\nlength of OIM observations = ', len(df_OIM), "\n******")
+
+               pprint(response)
+               return response
+
+
+
 
 if (__name__ == "__main__"):
      excel.init_excel(app)
-     app.run(port = 5000)
+#     app.run(port = 5000)
+     app.run()
