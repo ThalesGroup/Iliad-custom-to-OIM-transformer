@@ -55,78 +55,6 @@ def clean(meduzot_file):
 
 
 
-def get_observations(meduzot_file):
-	"""
-	"""
-	meduzot_df = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
-	observation_df = pd.DataFrame()
-	
-	pprint(meduzot_df)
-
-	obs_nb = 0
-
-	for index, row in meduzot_df.iterrows():
-		str_species = row['species']
-		species_list = str_species.split(";")
-		if row['quantity'] is np.nan:
-			str_quantity = "0"
-		else:
-			str_quantity = row['quantity']
-		quantity_list = str_quantity.split(",")
-		print(quantity_list)
-		if row['size'] is np.nan:
-			str_size = "0"
-		else:
-			str_size = row['size']
-		size_list = str_size.split(",")
-
-		for i, species in enumerate(species_list):
-			obs_nb = obs_nb+1
-			new_observation = {}
-			new_observation["ObsID"] =  obs_nb
-			new_observation["IndID"] = row["email"]						# to get from Dori
-			new_observation["datetime_ori"] = row["date & time"]		
-			new_observation["Location_20_Zones_ID"] = row["region"]			# request translation table
-			new_observation["lat"] = row["lat"]
-			new_observation["lng"] = row["lng"]
-			new_observation["Distance_from_coast"] = row["placement"]		# to check with Dori
-			new_observation["Activity"] = row["activity"]
-			print(quantity_list)	
-			if len(quantity_list)>1 :
-				print("several observations ", row["email"])
-				new_observation["Quantity_Rank"] = quantity_list[i]				# to get from Dori
-			else :
-				new_observation["Quantity_Rank"] = quantity_list[0]
-			if len(quantity_list)>i :
-				new_observation["Quantity"] = quantity_list[i]
-			else :
-				new_observation["Quantity"] = quantity_list[0]
-			if len(size_list)>i :
-				new_observation["Size_Rank"] = size_list[i]
-			else:
-				new_observation["Size_Rank"] = size_list[0]
-			new_observation["Jellies_on_the_beach"] = row["placement"]=="0"	# to check with Dori
-			new_observation["Species"] = species_list[i]
-			new_observation["Gold_User"] = str(0)							# to get from Dori
-			new_observation["Photo"] = row["image"]
-			new_observation["Stinging_Water"] = row["stingy water"]
-			new_observation["Survey_transect"] = ""							# to get from Dori
-			new_observation["AphiaID"] = species_list[i]					# to get from Dori
-			new_observation["Comments_Heb"] = row["comments"]
-			new_observation["Comments_Eng"] = ""							# to get from Roxana ? Dori ?
-			new_observation["coordinateUncertaintyInMeters"] = 0			# to get from Dori
-
-			#pprint(new_observation)
-
-			new_observation_df = pd.DataFrame(new_observation, index=[0])
-			observation_df = pd.concat([observation_df, new_observation_df], ignore_index = True)
-			#observation_df.reset_index()
-
-	#pprint(observation_df)
-	return observation_df
-
-
-
 def getLinguisticQuantity(quantity, dict_quantity):
 	if quantity.isdigit():
 		q = int(quantity)
@@ -321,6 +249,14 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 
 
 if __name__ == "__main__":
+	location_file = "parameters/JF_location_conversion.xlsx"
+	species_file = "parameters/JF_species_conversion.xlsx"
+	users_file = "parameters/JF_user_ID.csv"
+	quantity_file = "parameters/JF_quantity_conversion.csv"
+	size_file = "parameters/JF_size_conversion.csv"
+    
+    clean_file = "temp_file.csv"
+
 	for arg in sys.argv[1:]:
 		print(arg)
 	function = sys.argv[1]
@@ -336,20 +272,8 @@ if __name__ == "__main__":
 		df = get_observations(clean_file)
 		df.to_csv(oim_file)
 
-	if function == "clean_and_export_to_OIM":
-		export_file = sys.argv[2]
-		clean_file = "~/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/temp_file.csv"#sys.argv[3]
-		oim_file = sys.argv[3]
-		df_clean = clean(export_file)
-		df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
-		df_OIM = get_observations(clean_file)
-		df_OIM.to_csv(oim_file, encoding = "ISO-8859-1")
-		print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
-		print('\n********\nlength of OIM observations = ', len(df_OIM), "\n********\n")
-
 	if function == "clean_and_export_to_OIM_new_format":
 		export_file = sys.argv[2]
-		clean_file = "~/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/temp_file.csv"#sys.argv[3]
 		oim_file = sys.argv[3]
 
 		df_clean = clean(export_file)
@@ -357,11 +281,11 @@ if __name__ == "__main__":
 		
 		meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
 		df_OIM = get_observations_new_format(clean_file, meduzot_occurence,
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_location_conversion.xlsx",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_species_conversion.xlsx",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_user_ID.csv",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_quantity_conversion.csv",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_size_conversion.csv"
+			location_file,
+			species_file,
+			users_file,
+			quantity_file,
+			size_file
 			)
 		df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
 		

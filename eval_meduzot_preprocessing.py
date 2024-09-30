@@ -1,12 +1,7 @@
 """
-Created on 11/01/2024
-
-@author: Claire LAUDY
-
 
 Evaluation of the quality of the automatic preprocessing of meduzot 
 files with InSyTo based soft.
-
 
 """
 
