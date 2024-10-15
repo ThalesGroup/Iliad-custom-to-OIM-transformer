@@ -1,7 +1,4 @@
 """
-Created on 11/01/2024
-
-@author: Claire LAUDY
 
 
 Preprocessing of Meduzot files in order to be compatible with OIM and non redundant
@@ -33,6 +30,8 @@ export_columns = ['ObsID','IndID','datetime_ori','Location_20_Zones_ID',
 
 def clean(meduzot_file):
 	"""
+	Remove the duplicate lines from the Meduzot file.
+	Exact duplicates only are removed.
 	"""
 	df_meduzot = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
 	print('\n********\nlength of meduzot file ', meduzot_file, ' = ', len(df_meduzot), "\n********\n")
@@ -57,6 +56,7 @@ def clean(meduzot_file):
 
 def get_observations(meduzot_file):
 	"""
+	Get observations from the Mezuzot xlsx file and transform them into an OIM compatible format.
 	"""
 	meduzot_df = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
 	observation_df = pd.DataFrame()
@@ -73,7 +73,6 @@ def get_observations(meduzot_file):
 		else:
 			str_quantity = row['quantity']
 		quantity_list = str_quantity.split(",")
-		print(quantity_list)
 		if row['size'] is np.nan:
 			str_size = "0"
 		else:
@@ -84,17 +83,17 @@ def get_observations(meduzot_file):
 			obs_nb = obs_nb+1
 			new_observation = {}
 			new_observation["ObsID"] =  obs_nb
-			new_observation["IndID"] = row["email"]						# to get from Dori
-			new_observation["datetime_ori"] = row["date & time"]		
-			new_observation["Location_20_Zones_ID"] = row["region"]			# request translation table
+			new_observation["IndID"] = row["email"]
+			new_observation["datetime_ori"] = row["date & time"]
+			new_observation["Location_20_Zones_ID"] = row["region"]
 			new_observation["lat"] = row["lat"]
 			new_observation["lng"] = row["lng"]
-			new_observation["Distance_from_coast"] = row["placement"]		# to check with Dori
+			new_observation["Distance_from_coast"] = row["placement"]
 			new_observation["Activity"] = row["activity"]
-			print(quantity_list)	
 			if len(quantity_list)>1 :
-				print("several observations ", row["email"])
-				new_observation["Quantity_Rank"] = quantity_list[i]				# to get from Dori
+				#Several observations are stored in the same row. 
+				#The content of the cells has to be splitted to produce one row per observation
+				new_observation["Quantity_Rank"] = quantity_list[i]
 			else :
 				new_observation["Quantity_Rank"] = quantity_list[0]
 			if len(quantity_list)>i :
@@ -105,24 +104,21 @@ def get_observations(meduzot_file):
 				new_observation["Size_Rank"] = size_list[i]
 			else:
 				new_observation["Size_Rank"] = size_list[0]
-			new_observation["Jellies_on_the_beach"] = row["placement"]=="0"	# to check with Dori
+			new_observation["Jellies_on_the_beach"] = row["placement"]=="0"
 			new_observation["Species"] = species_list[i]
-			new_observation["Gold_User"] = str(0)							# to get from Dori
+			new_observation["Gold_User"] = str(0)
 			new_observation["Photo"] = row["image"]
 			new_observation["Stinging_Water"] = row["stingy water"]
-			new_observation["Survey_transect"] = ""							# to get from Dori
-			new_observation["AphiaID"] = species_list[i]					# to get from Dori
+			new_observation["Survey_transect"] = ""
+			new_observation["AphiaID"] = species_list[i]
 			new_observation["Comments_Heb"] = row["comments"]
-			new_observation["Comments_Eng"] = ""							# to get from Roxana ? Dori ?
-			new_observation["coordinateUncertaintyInMeters"] = 0			# to get from Dori
-
-			#pprint(new_observation)
+			new_observation["Comments_Eng"] = ""
+			new_observation["coordinateUncertaintyInMeters"] = 0
 
 			new_observation_df = pd.DataFrame(new_observation, index=[0])
 			observation_df = pd.concat([observation_df, new_observation_df], ignore_index = True)
 			#observation_df.reset_index()
 
-	#pprint(observation_df)
 	return observation_df
 
 
@@ -167,9 +163,9 @@ def getLinguisticSize(size, dict_size):
 
 def get_observations_new_format(meduzot_file, occurence_string, location_file, species_file, users_file, quantity_file, size_file):
 	"""
+	Get observations from the Mezuzot xlsx file and transform them into a (newly defined) OIM compatible format.
 	"""
 	meduzot_df = pd.read_csv(meduzot_file)#, encoding = "ISO-8859-1")
-#	meduzot_df = pd.read_excel(meduzot_file)
 	observation_df = pd.DataFrame()
 	
 	#Get the translation dictionaries from the csv files:
@@ -203,8 +199,6 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 	dict_size = {}
 	for index, row in df_size.iterrows():
 		dict_size[row["Size range"]] = row["Rank"]
-
-
 
 	#Read and translate the data :
 
@@ -247,6 +241,8 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		new_observation["scientificName"] = str_species
 
 		if len(quantity_list)>cpt_species:
+		#Several observations are stored in the same row. 
+		#The content of the cells has to be splitted to produce one row per observation
 			if quantity_list[cpt_species] != "-" and quantity_list[cpt_species] != "0":
 				new_observation["occurenceStatus"] = "present"
 			else:
@@ -256,9 +252,9 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		new_observation["basisOfRecord"] = "HumanObservation"
 		new_observation["scientificNameID"] = str_species
 
-		new_observation["recordedBy (Ind ID)"] = row["email"]					# to check with Dori
+		new_observation["recordedBy (Ind ID)"] = row["email"]
 
-		new_observation["quantificationMethod"] = row["activity"]				# translation table to get from Dori
+		new_observation["quantificationMethod"] = row["activity"]
 		if len(quantity_list)>cpt_species :
 			new_observation["organismQuantity"] = getLinguisticQuantity(quantity_list[cpt_species], dict_quantity)
 		else:
@@ -278,15 +274,15 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		heb_comment = str(row["comments"])
 		heb_survey = "סקר"
 		event_type = "0"
-		if heb_comment is not "nan" and heb_survey in heb_comment:
+		if heb_comment != "nan" and heb_survey in heb_comment:
 			event_type = "Beach_survey"
 		new_observation["eventType"] = event_type
 
 		new_observation["coordinateUncertaintyInMeters"] = 10000
 
-		new_observation["strandedJellyfish"] = row["placement"]=="0"			# to check with Dori
+		new_observation["strandedJellyfish"] = row["placement"]=="0"
 
-		new_observation["goldUser (accuracy)"] = str(0)							# to get from Dori
+		new_observation["goldUser (accuracy)"] = str(0)
 
 		new_observation["stinging_Water"] = row["stingy water"]
 
@@ -338,7 +334,7 @@ if __name__ == "__main__":
 
 	if function == "clean_and_export_to_OIM":
 		export_file = sys.argv[2]
-		clean_file = "~/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/temp_file.csv"#sys.argv[3]
+		clean_file = "temp_file.csv"#sys.argv[3]
 		oim_file = sys.argv[3]
 		df_clean = clean(export_file)
 		df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
@@ -349,7 +345,7 @@ if __name__ == "__main__":
 
 	if function == "clean_and_export_to_OIM_new_format":
 		export_file = sys.argv[2]
-		clean_file = "~/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/temp_file.csv"#sys.argv[3]
+		clean_file = "temp_file.csv"#sys.argv[3]
 		oim_file = sys.argv[3]
 
 		df_clean = clean(export_file)
@@ -357,11 +353,11 @@ if __name__ == "__main__":
 		
 		meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
 		df_OIM = get_observations_new_format(clean_file, meduzot_occurence,
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_location_conversion.xlsx",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_species_conversion.xlsx",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_user_ID.csv",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_quantity_conversion.csv",
-			"/home/S3G-LABS/u1044/Remote_Docs/Documents/projects_data/Iliad/jellyfish_pilot_data/parameters/JF_size_conversion.csv"
+			"parameters/JF_location_conversion.xlsx",
+			"parameters/JF_species_conversion.xlsx",
+			"parameters/JF_user_ID.csv",
+			"parameters/JF_quantity_conversion.csv",
+			"parameters/JF_size_conversion.csv"
 			)
 		df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
 		
