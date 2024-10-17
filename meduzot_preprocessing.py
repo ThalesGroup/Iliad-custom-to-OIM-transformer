@@ -11,7 +11,6 @@ import xlrd
 import sys
 import csv
 from pprint import pprint
-import datetime
 import numpy as np
 
 
