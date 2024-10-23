@@ -15,10 +15,12 @@ import numpy as np
 
 
 
-meduzot_columns = ['id','email','user name','date & time','region',
+meduzot_columns = ['id',
+				'email', 'user name',
+				'date & time','region',
 				'distance from shore','stingy water','species','placement',
 				'quantity','size','activity','lat','lng','image','comments',
-				'distance walked on the beach','group']
+				'distance walked on the beach','group (survey)', "IndID", "goldUser"]
 
 export_columns = ['ObsID','IndID','datetime_ori','Location_20_Zones_ID',
 		'lat','lng','Distance_from_coast','Activity','Quantity_Rank',
@@ -27,26 +29,36 @@ export_columns = ['ObsID','IndID','datetime_ori','Location_20_Zones_ID',
 		'Comments_Heb','Comments_Eng','coordinateUncertaintyInMeters']
 
 
+DEBUG = True
+
+
 def clean(meduzot_file):
 	"""
 	Remove the duplicate lines from the Meduzot file.
 	Exact duplicates only are removed.
 	"""
-	df_meduzot = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
+	df_meduzot = pd.DataFrame([])
+	if meduzot_file.endswith(".csv"):
+		df_meduzot = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
+	elif meduzot_file.endswith(".xlsx"):
+		df_meduzot = pd.read_excel(meduzot_file)
 	print('\n********\nlength of meduzot file ', meduzot_file, ' = ', len(df_meduzot), "\n********\n")
 	df_merged = df_meduzot.drop_duplicates()
 
 	#pprint(df_merged.columns[0])
 	# conversion des dates :
-	df_merged['date & time'] = pd.to_datetime(df_merged['date & time'], format='%d/%m/%Y %H:%M')
+	if DEBUG:
+		print(df_merged['date & time'])
+	df_merged['date & time'] = pd.to_datetime(df_merged['date & time'], format = 'mixed')#format='%d/%m/%Y %H:%M')
 
 	df_merged['diff'] = df_merged['date & time'].diff(+1).dt.total_seconds().div(60)
 	df_merged.loc[(abs(df_merged['diff'])<=1), 'is_dup_date'] = True
 	df_merged["is_dup_data"] = df_merged.duplicated(subset=[df_merged.columns[0], #'id',
-				'email','user name','region',
-	 			'distance from shore','stingy water','species','placement',
-	   			'quantity','size','activity','lat','lng','image','comments',
-	   			'distance walked on the beach','group'])
+				'email', 'user name',
+				'date & time','region',
+				'distance from shore','stingy water','species','placement',
+				'quantity','size','activity','lat','lng','image','comments',
+				'distance walked on the beach'])
 	df_merged = df_merged[~((df_merged["is_dup_date"]) & (df_merged["is_dup_data"]))]
 
 	return df_merged
@@ -349,6 +361,7 @@ if __name__ == "__main__":
 		oim_file = sys.argv[3]
 
 		df_clean = clean(export_file)
+		print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
 		df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
 		
 		meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
@@ -361,7 +374,6 @@ if __name__ == "__main__":
 			)
 		df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
 		
-		print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
 		print('\n********\nlength of OIM observations = ', len(df_OIM), "\n********\n")
 
 
