@@ -54,7 +54,7 @@ def clean(meduzot_file):
 	df_merged['diff'] = df_merged['date & time'].diff(+1).dt.total_seconds().div(60)
 	df_merged.loc[(abs(df_merged['diff'])<=1), 'is_dup_date'] = True
 	df_merged["is_dup_data"] = df_merged.duplicated(subset=[df_merged.columns[0], #'id',
-				'email', 'user name',
+#				'email', 'user name',
 				'date & time','region',
 				'distance from shore','stingy water','species','placement',
 				'quantity','size','activity','lat','lng','image','comments',
@@ -204,12 +204,14 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 	dict_quantity = {}
 	for index, row in df_quantity.iterrows():
 		dict_quantity[row["Quantity Range"]] = row["Rank"]
+	pprint(dict_quantity)
 
 	df_size = pd.read_csv(size_file,
 							sep=";")
 	dict_size = {}
 	for index, row in df_size.iterrows():
 		dict_size[row["Size range"]] = row["Rank"]
+	pprint(dict_size)
 
 	#Read and translate the data :
 
@@ -249,7 +251,11 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		new_observation["decimalLongitude"] = row["lng"]
 		new_observation["decimalLatitude"] = row["lat"]
 
-		new_observation["scientificName"] = str_species
+		if str_species == "-":
+			new_observation["scientificName"] = "-"
+		else:
+			new_observation["scientificName"] = dict_species[str_species]
+
 
 		if len(quantity_list)>cpt_species:
 		#Several observations are stored in the same row. 
@@ -261,9 +267,13 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		else:
 			new_observation["occurenceStatus"] = "unreported"
 		new_observation["basisOfRecord"] = "HumanObservation"
-		new_observation["scientificNameID"] = str_species
+		if str_species == "-":
+			new_observation["scientificNameID"] = "-"
+		else:
+			new_observation["scientificNameID"] = dict_species[str_species]
+#		new_observation["scientificNameID"] = str_species
 
-		new_observation["recordedBy (Ind ID)"] = row["email"]
+#		new_observation["recordedBy (Ind ID)"] = row["email"]
 
 		new_observation["quantificationMethod"] = row["activity"]
 		if len(quantity_list)>cpt_species :
@@ -275,10 +285,10 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		new_observation["sampleSizeUnit"] = "cm"
 		if len(size_list)>cpt_species :
 			new_observation["sampleSizeValue"] = getLinguisticSize(size_list[cpt_species], dict_size)
-			new_observation["size"] = size_list[cpt_species]
+			new_observation["size"] = getLinguisticSize(size_list[cpt_species], dict_size)
 		else:
 			new_observation["sampleSizeValue"] = getLinguisticSize(size_list[0], dict_size)
-			new_observation["size"] = size_list[0]
+			new_observation["size"] = getLinguisticSize(size_list[0], dict_size)
 
 		new_observation["MachineObservation"] = row["image"]
 
@@ -312,9 +322,10 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
 		new_observation["Distance_from_coast"] = row["distance from shore"]
 
 		if len(quantity_list)>cpt_species :
-			new_observation["Quantity_Reported"] = quantity_list[cpt_species]
+			print(quantity_list[cpt_species], "->", getLinguisticQuantity(quantity_list[cpt_species], dict_quantity))
+			new_observation["Quantity_Reported"] = getLinguisticQuantity(quantity_list[cpt_species], dict_quantity)
 		else :
-			new_observation["Quantity_Reported"] = quantity_list[0]
+			new_observation["Quantity_Reported"] = getLinguisticQuantity(quantity_list[0], dict_quantity)
 
 		new_observation["Comments_Heb"] = row["comments"]
 
