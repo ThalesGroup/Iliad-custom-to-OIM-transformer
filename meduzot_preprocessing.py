@@ -181,7 +181,7 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
     """
     Get observations from the Mezuzot xlsx file and transform them into a (newly defined) OIM compatible format.
     """
-    meduzot_df = pd.read_csv(meduzot_file)#, encoding = "ISO-8859-1")
+    meduzot_df = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")#, encoding = "ISO-8859-1")
     observation_df = pd.DataFrame()
     
     #Get the translation dictionaries from the csv files:
