@@ -12,6 +12,7 @@ import sys
 import csv
 from pprint import pprint
 import numpy as np
+import chardet
 
 
 
@@ -32,16 +33,17 @@ export_columns = ['ObsID','IndID','datetime_ori','Location_20_Zones_ID',
 DEBUG = False
 
 
-def clean(meduzot_file):
+def clean(meduzot_file, encoding):
     """
     Remove the duplicate lines from the Meduzot file.
     Exact duplicates only are removed.
     """
     df_meduzot = pd.DataFrame([])
+
     if meduzot_file.endswith(".csv"):
-        df_meduzot = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
+        df_meduzot = pd.read_csv(meduzot_file, encoding=encoding)#, encoding = "ISO-8859-1")
     elif meduzot_file.endswith(".xlsx"):
-        df_meduzot = pd.read_excel(meduzot_file)
+        df_meduzot = pd.read_excel(meduzot_file, encoding=encoding)
     print('\n********\nlength of meduzot file ', meduzot_file, ' = ', len(df_meduzot), "\n********\n")
     df_merged = df_meduzot.drop_duplicates()
 
@@ -74,7 +76,7 @@ def get_observations(meduzot_file):
     """
     Get observations from the Mezuzot xlsx file and transform them into an OIM compatible format.
     """
-    meduzot_df = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")
+    meduzot_df = pd.read_csv(meduzot_file)#, encoding = "ISO-8859-1")
     observation_df = pd.DataFrame()
     
     pprint(meduzot_df)
@@ -181,7 +183,7 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
     """
     Get observations from the Mezuzot xlsx file and transform them into a (newly defined) OIM compatible format.
     """
-    meduzot_df = pd.read_csv(meduzot_file, encoding = "ISO-8859-1")#, encoding = "ISO-8859-1")
+    meduzot_df = pd.read_csv(meduzot_file)#, encoding = "ISO-8859-1")#, encoding = "ISO-8859-1")
     observation_df = pd.DataFrame()
     
     #Get the translation dictionaries from the csv files:
@@ -198,7 +200,7 @@ def get_observations_new_format(meduzot_file, occurence_string, location_file, s
     pprint(df_species)
 
     df_users = pd.read_csv(users_file,
-                            sep=";", encoding = "ISO-8859-1")
+                            sep=";")#, encoding = "ISO-8859-1")
     list_gold_users = []
     for index, row in df_users.iterrows():
         if int(row["Sum of goldUser (accuracy)"])>1:
@@ -372,9 +374,9 @@ if __name__ == "__main__":
         clean_file = "temp_file.csv"#sys.argv[3]
         oim_file = sys.argv[3]
         df_clean = clean(export_file)
-        df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
+        df_clean.to_csv(clean_file)#, encoding = "ISO-8859-1")
         df_OIM = get_observations(clean_file)
-        df_OIM.to_csv(oim_file, encoding = "ISO-8859-1")
+        df_OIM.to_csv(oim_file)#, encoding = "ISO-8859-1")
         print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
         print('\n********\nlength of OIM observations = ', len(df_OIM), "\n********\n")
 
@@ -383,9 +385,13 @@ if __name__ == "__main__":
         clean_file = "temp_file.csv"#sys.argv[3]
         oim_file = sys.argv[3]
 
-        df_clean = clean(export_file)
+        with open(export_file, 'rb') as f:
+            encoding = chardet.detect(f.read())["encoding"]
+            print(encoding)
+
+        df_clean = clean(export_file, encoding)
         print('\n********\nlength of clean file = ', len(df_clean), "\n********\n")
-        df_clean.to_csv(clean_file, encoding = "ISO-8859-1")
+        df_clean.to_csv(clean_file)#, encoding = "ISO-8859-1")
         
         meduzot_occurence = "Jellyfish_in_Israeli_Mediterranean_coast"
         df_OIM = get_observations_new_format(clean_file, meduzot_occurence,
